@@ -76,6 +76,36 @@ task-manager-backend
 - **Autenticación con Spring Security**
 - **Uso de Base de Datos real como PostgreSQL**
 
+
+---
+
+
+## 🌱 Flujo de ramas (Git Flow)
+
+Este repositorio sigue un flujo de ramas inspirado en **Git Flow**:
+
+- `master`/`main`: rama estable, contiene las versiones listas para producción.  
+- `develop`: rama de integración, donde se mergean las funcionalidades antes de pasar a `master`/`main`.  
+- `ft/xxxx`: ramas con características/desarrollos nuevas que parten de `develop` y se mergean de vuelta a `develop`.
+
+**Flujo de trabajo habitual:**
+
+ft/funcionalidad → develop → master
+
+De esta forma:
+1. Creo una rama `ft/...` desde `develop`.  
+2. Trabajo en esa rama y abro un Pull Request hacia `develop`.  
+3. Cuando todo está probado e integrado, se hace merge de `develop` a `master`/`main`.  
+
+
+## 📊 Ejemplo visual del flujo
+```
+ft/x ----┐
+              ├─> develop ----┐
+ft/y ----┘               ├─> master/main
+                              └─> release
+```
+
 ---
 
 ## 📜 License

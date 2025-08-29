@@ -76,6 +76,35 @@ task-manager-backend
 - **Authentication with Spring Security**
 - **Persistence with a real database like PostgreSQL**
 
+
+---
+
+## 🌱 Branching Workflow (Git Flow)
+
+This repository follows a branching workflow inspired by **Git Flow**:
+
+- `master`/`main`: stable branch, contains production-ready versions.
+- `develop`: integration branch, where features are merged before going into `master`/`main`.
+- `ft/xxxx`: feature branches created from `develop` and merged back into `develop`.
+
+**Typical workflow:**
+
+ft/feature → develop → master
+
+In this workflow:
+1. I create a `ft/...` branch from `develop`.
+2. I work on that branch and open a Pull Request into `develop`.
+3. Once everything is tested and integrated, `develop` is merged into `master`/`main`.
+
+
+## 📊 Visual example of the workflow
+```
+ft/x ----┐
+              ├─> develop ----┐
+ft/y ----┘               ├─> master/main
+                              └─> release
+```
+
 ---
 
 ## 📜 License
