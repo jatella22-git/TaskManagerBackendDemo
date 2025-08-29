@@ -31,7 +31,7 @@ mvn spring-boot:run
 
 ### 3. Acceso
 - **API disponible en http://localhost:8080**
-- **Consola H2 disponible en http://localhost:8080**
+- **Consola H2 disponible en http://localhost:8080/h2-console**
   - **Driver Class:** org.h2.Driver
   - **JDBC URL:** jdbc:h2:mem:taskdb
   - **Usuario:** sa
