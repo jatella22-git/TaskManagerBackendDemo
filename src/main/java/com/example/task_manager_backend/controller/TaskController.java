@@ -1,7 +1,7 @@
 package com.example.task_manager_backend.controller;
 
 import com.example.task_manager_backend.entity.Task;
-import com.example.task_manager_backend.repository.TaskRepository;
+import com.example.task_manager_backend.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +17,9 @@ import java.util.Optional;
 @RequestMapping("/tasks")
 public class TaskController {
 
-    // Inyectamos una instancia de TaskRepository para interactuar con la base de datos
+    //We inject an instance of TaskService to interact with the database
     @Autowired
-    private TaskRepository taskRepository;
+    private TaskService taskService;
 
     /**
      * Retrieves a list of all existing tasks.
@@ -29,7 +29,7 @@ public class TaskController {
      */
     @GetMapping
     public List<Task> getAllTasks() {
-        return taskRepository.findAll();
+        return taskService.getAllTasks();
     }
 
     /**
@@ -42,7 +42,7 @@ public class TaskController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
-        Optional<Task> task = taskRepository.findById(id);
+        Optional<Task> task = taskService.getTaskById(id);
         return task.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
@@ -55,7 +55,7 @@ public class TaskController {
      */
     @PostMapping
     public Task createTask(@RequestBody Task task) {
-        return taskRepository.save(task);
+        return taskService.createTask(task);
     }
 
     /**
@@ -69,14 +69,9 @@ public class TaskController {
      */
     @PutMapping("/{id}")
     public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task taskDetails) {
-        Optional<Task> task = taskRepository.findById(id);
-        if (task.isPresent()) {
-            Task existingTask = task.get();
-            existingTask.setTitle(taskDetails.getTitle());
-            existingTask.setDescription(taskDetails.getDescription());
-            existingTask.setCompleted(taskDetails.isCompleted());
-            taskRepository.save(existingTask);
-            return ResponseEntity.ok(existingTask);
+        Task updatedTask = taskService.updateTask(id, taskDetails);
+        if (updatedTask != null) {
+            return ResponseEntity.ok(updatedTask);
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -92,12 +87,7 @@ public class TaskController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTaskById(@PathVariable Long id) {
-        Optional<Task> task = taskRepository.findById(id);
-        if (task.isPresent()) {
-            taskRepository.deleteById(id);
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        taskService.deleteTask(id);
+        return ResponseEntity.noContent().build();
     }
 }
